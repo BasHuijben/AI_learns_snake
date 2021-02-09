@@ -1,9 +1,6 @@
 # AI learns to play snake
 
-
-
-A genetic algorithm is used to train a neural network to find as much apples as
-possible. The neural network has 24 input values, 2 hidden layers each with 16
+A genetic algorithm is used to train a neural network to play snake. The neural network has 24 input values, 2 hidden layers each with 16
 neurons and 4 output values representing the four different directions, i.e
 left, right, up and down. The 24 input values are as followed:
 1.  In 4 directions distance to the wall
@@ -16,7 +13,7 @@ The genetic algorithm uses a single point binary crossover between parent 1
 and parent 2.
 
 ### Mutation
-Radom values sampled from a Gaussian distribution with a standard deviation 
+Radom values sampled from a Gaussian distribution with a standard deviation
 of 0.5 and a mean of 0 are being used as random mutations. These mutations are
 added to the DNA values of the individuals
 
@@ -103,9 +100,9 @@ The fitness function that is being used is copied from https://chrispresso.io/AI
 </math>
 
 The fitness function takes into account the following aspects:
-1. Reward snakes early on for exploration + finding a couple apples.
-2. Have an increasing reward for snakes as they find more apples.
-3. Penalize snakes for taking a lot of steps.Putting those rules into code looks something like this  
+1. Reward snakes early on for exploration + finding a couple apples
+2. Have an increasing reward for snakes as they find more apples
+3. Penalize snakes for taking a lot of steps
 
 ### Dashboard
 A simple is dashboard is generated to train and view the AI to play snake  
