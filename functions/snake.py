@@ -55,6 +55,13 @@ class Snake(SnakeBoard, Brain):
         self.n_apples = 0
         self.get_new_apple()
 
+    def snake_move(self):
+        self.make_decision()
+
+        self.update_snake()
+        self.found_apple()
+        self.snake_alive()
+
     def make_decision(self):
         """ Change the direction of the snake
         """
@@ -148,7 +155,7 @@ class Snake(SnakeBoard, Brain):
     def get_vision(self):
         """ Get vision of snake. The snake can see 3 things in 4/8 different directions and has a sense of the
             direction it is going. It can see the following three things:
-                1) In 8 direction is can see if an apple is present (binary)
+                1) In 8 direction it can see if an apple is present (binary)
                 2) In 4 direction it can see the distance to wall
                 3) In 8 direction it can see if a body part is near (binary)
         """

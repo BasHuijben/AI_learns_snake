@@ -56,37 +56,38 @@ def train_ai_triggered(_):
                Input('output_folder', 'children'),
                Input('metric_drop_down', 'value')])
 def update_graph(_, output_folder, metric):
-    intermediate_results_path = os.path.join(output_folder, file_name_intermediate_results)
-    if os.path.exists(intermediate_results_path) and output_folder is not None:
+    if output_folder is not None:
+        intermediate_results_path = os.path.join(output_folder, file_name_intermediate_results)
+        if os.path.exists(intermediate_results_path):
 
-        # read intermediate results
-        df = pd.read_csv(intermediate_results_path)
+            # read intermediate results
+            df = pd.read_csv(intermediate_results_path)
 
-        # depending on the metric select the correct columns
-        if metric == 'score':
-            population = 'population_score'
-            best_snake = 'best_score'
-            y_label = "Number of found apples (n)"
-        elif metric == 'fitness':
-            population = 'population_fitness'
-            best_snake = 'best_fitness'
-            y_label = "Fitness"
-        else:
-            raise ValueError("Metric %s is not supported" % metric)
+            # depending on the metric select the correct columns
+            if metric == 'score':
+                population = 'population_score'
+                best_snake = 'best_score'
+                y_label = "Number of found apples (n)"
+            elif metric == 'fitness':
+                population = 'population_fitness'
+                best_snake = 'best_fitness'
+                y_label = "Fitness"
+            else:
+                raise ValueError("Metric %s is not supported" % metric)
 
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=df['generation'],
-                                 y=df[population],
-                                 name='Population %s' % metric,
-                                 mode='lines+markers'))
-        fig.add_trace(go.Scatter(x=df['generation'],
-                                 y=df[best_snake],
-                                 name='Best snake %s' % metric,
-                                 mode='lines+markers'))
-        fig.update_layout(title="Progress of Snake AI",
-                          xaxis_title="Generation (n)",
-                          yaxis_title=y_label)
-        return fig
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=df['generation'],
+                                     y=df[population],
+                                     name='Population %s' % metric,
+                                     mode='lines+markers'))
+            fig.add_trace(go.Scatter(x=df['generation'],
+                                     y=df[best_snake],
+                                     name='Best snake %s' % metric,
+                                     mode='lines+markers'))
+            fig.update_layout(title="Progress of Snake AI",
+                              xaxis_title="Generation (n)",
+                              yaxis_title=y_label)
+            return fig
     return go.Figure()
 
 # Callbacks for tab 2
@@ -104,27 +105,28 @@ def set_session_selection(_):
 @app.callback(Output('generation_selection', 'options'),
               Input('session_selection', 'value'))
 def set_generation_selection(session_name):
-    path = os.path.join(output_path, session_name)
     options = []
-    if os.path.isdir(path):
-        generations = os.listdir(path)
-        for generation in generations:
-            if os.path.isfile(os.path.join(path, generation)) and os.path.splitext(generation)[1] == '.obj':
-                try:
-                    match = re.search(r"^best_snake_generatie-(\d+)_score-(\d+).obj$", generation).groups()
+    if session_name is not None:
+        path = os.path.join(output_path, session_name)
+        if os.path.isdir(path):
+            generations = os.listdir(path)
+            for generation in generations:
+                if os.path.isfile(os.path.join(path, generation)) and os.path.splitext(generation)[1] == '.obj':
+                    try:
+                        match = re.search(r"^best_snake_generatie-(\d+)_score-(\d+).obj$", generation).groups()
 
-                    options.append({'label': 'Generation %s, score=%s' % (match[0], match[1]),
-                                    'value': generation,
-                                    'generation': int(match[0])})
-                except:
-                    pass
-        # sort generations from high to low
-        options = sorted(options, key=lambda k: k['generation'], reverse=True)
+                        options.append({'label': 'Generation %s, score=%s' % (match[0], match[1]),
+                                        'value': generation,
+                                        'generation': int(match[0])})
+                    except:
+                        pass
+            # sort generations from high to low
+            options = sorted(options, key=lambda k: k['generation'], reverse=True)
 
-        # remove key='generation' because only the keys label and value are excepted by drop down component
-        for option in options:
-            option.pop('generation')
-        return options
+            # remove key='generation' because only the keys label and value are excepted by drop down component
+            for option in options:
+                option.pop('generation')
+            return options
     return options
 
 
@@ -223,4 +225,4 @@ def update_graph(_, snake_location, fig):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(debug=True)
