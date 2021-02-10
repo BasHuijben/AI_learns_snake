@@ -105,4 +105,4 @@ The fitness function takes into account the following aspects:
 3. Penalize snakes for taking a lot of steps
 
 ### Dashboard
-A simple is dashboard is generated to train and view the AI to play snake  
+A simple dashboard is generated to train and view the AI to play snake  
