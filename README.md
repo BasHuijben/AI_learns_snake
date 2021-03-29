@@ -106,3 +106,8 @@ The fitness function takes into account the following aspects:
 
 ### Dashboard
 A simple dashboard is generated to train and view the AI to play snake  
+
+# Run docker container
+`docker image build -t snake_game .`
+
+`docker container run -p 8050:8050 snake_game`
