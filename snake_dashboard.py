@@ -156,6 +156,8 @@ def ai_plays_snake(session, generation, _, snake):
 def update_graph(_, snake_location, fig):
 
     if snake_location is not None:
+        print("snake_location = %s" % snake_location)
+
         with open(snake_location, 'rb') as file:
             snake = pickle.load(file)
         if snake.alive:
@@ -225,4 +227,4 @@ def update_graph(_, snake_location, fig):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(host="0.0.0.0", port=8050)

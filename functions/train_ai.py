@@ -2,6 +2,7 @@ import os
 import pickle
 
 from functions.genetic_algorithm import GeneticAlgorithm
+from default import file_name_intermediate_results
 
 
 def start_genetic_algorithm(output_folder, n_generations, population_size, survival_perc, parent_perc, mutation_perc):
@@ -23,8 +24,7 @@ def start_genetic_algorithm(output_folder, n_generations, population_size, survi
     mutation_perc /= 100
 
     # Create file to save intermediate results
-    file_name = 'Intermediate_results.csv'
-    intermediate_results_path = "%s/%s" % (output_folder, file_name)
+    intermediate_results_path = "%s/%s" % (output_folder, file_name_intermediate_results)
     # if file does not exist create one and add header
     if not os.path.exists(intermediate_results_path):
         headers = "generation,population_fitness,population_score,best_fitness,best_score\n"

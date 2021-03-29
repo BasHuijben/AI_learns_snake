@@ -57,7 +57,7 @@ def generate_layout():
                                                                  min=0,
                                                                  max=100,
                                                                  style={"margin": "5px",
-                                                                      "width": "100%"}),
+                                                                        "width": "100%"}),
                                                        html.Div([dbc.Button('Train AI',
                                                                             id="train_ai_button",
                                                                             color="primary",
